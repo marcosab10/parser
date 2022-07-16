@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.savvion.util.parser.api.ParserApi;
 
 @RestController
-@RequestMapping("/healthCheck")
+@RequestMapping("/health")
 public class HealthCheckController implements ParserApi {
 	
 	private static final String CONTENT_TYPE = "Content-Type";
@@ -18,7 +18,7 @@ public class HealthCheckController implements ParserApi {
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<String> tranform() {
 		
-		String retorno = "{\"health\": \"up\"}";
+		String retorno = "{\"status\": \"UP\"}";
 		
 		return ResponseEntity.ok().header(CONTENT_TYPE, APPLICATION_JSON).body(retorno);
 	}
