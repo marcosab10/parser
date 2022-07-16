@@ -6,7 +6,7 @@ import org.springframework.util.Assert;
 @Component
 public class ParseRepository {
 
-	public String findCountry(String body) {
+	public String callMS(String body) {
 		Assert.notNull(body, "The body  must not be null");
 		return "Ok";
 	}

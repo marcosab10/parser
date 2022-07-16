@@ -26,7 +26,7 @@ public class ParseEndpoint {
 	@ResponsePayload
 	public ParseResponse getCountry(@RequestPayload ParseRequest request) {
 		ParseResponse response = new ParseResponse();
-		response.setResult(parseRepository.findCountry(request.getBody()));
+		response.setResult(parseRepository.callMS(request.getBody()));
 
 		return response;
 	}
