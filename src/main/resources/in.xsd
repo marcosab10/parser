@@ -15,6 +15,7 @@
     <xs:element name="parseResponse">
         <xs:complexType>
             <xs:sequence>
+                <xs:element name="statusCode" type="xs:int"/>
                 <xs:element name="result" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>

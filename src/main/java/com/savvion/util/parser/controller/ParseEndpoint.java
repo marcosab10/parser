@@ -25,9 +25,6 @@ public class ParseEndpoint {
 	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "parseRequest")
 	@ResponsePayload
 	public ParseResponse parse(@RequestPayload ParseRequest request) {
-		ParseResponse response = new ParseResponse();
-		response.setResult(parserService.callMS(request.getBody()));
-
-		return response;
+		return parserService.callMS(request);
 	}
 }
