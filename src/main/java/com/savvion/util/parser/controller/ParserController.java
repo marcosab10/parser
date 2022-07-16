@@ -9,7 +9,7 @@ import com.savvion.util.parser.api.ParserApi;
 
 @RestController
 @RequestMapping("/transform")
-public class ParserCoontroller implements ParserApi {
+public class ParserController implements ParserApi {
 	
 	private static final String CONTENT_TYPE = "Content-Type";
 	private static final String APPLICATION_JSON = "application/json";
