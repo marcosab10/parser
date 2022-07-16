@@ -18,13 +18,13 @@ public class ParseEndpoint {
 	private ParseRepository parseRepository;
 
 	@Autowired
-	public ParseEndpoint(ParseRepository countryRepository) {
-		this.parseRepository = countryRepository;
+	public ParseEndpoint(ParseRepository parseRepository) {
+		this.parseRepository = parseRepository;
 	}
 
 	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "parseRequest")
 	@ResponsePayload
-	public ParseResponse getCountry(@RequestPayload ParseRequest request) {
+	public ParseResponse parse(@RequestPayload ParseRequest request) {
 		ParseResponse response = new ParseResponse();
 		response.setResult(parseRepository.callMS(request.getBody()));
 
