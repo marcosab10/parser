@@ -13,9 +13,15 @@ import io.spring.guides.gs_producing_web_service.ParseResponse;
 
 @Service
 public class ParserService {
+	public static int PRETTY_PRINT_INDENT_FACTOR = 1;
 	
 	public ParseResponse callMS(ParseRequest parseRequest) {
 		Assert.notNull(parseRequest.getBody(), "The body  must not be null");
+		
+		JSONObject xmlJSONObj = XML.toJSONObject(parseRequest.getBody());
+        String jsonPrettyPrintString = xmlJSONObj.toString(PRETTY_PRINT_INDENT_FACTOR);
+        System.out.println(jsonPrettyPrintString);
+		
 		
 		RestTemplate client = new RestTemplate();
 		ResponseEntity<String> response = client.exchange(parseRequest.getUrl(), HttpMethod.GET, null, String.class);
