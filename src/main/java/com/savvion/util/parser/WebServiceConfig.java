@@ -29,7 +29,7 @@ public class WebServiceConfig extends WsConfigurerAdapter {
 		DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
 		wsdl11Definition.setPortTypeName("ParserPort");
 		wsdl11Definition.setLocationUri("/parser");
-		wsdl11Definition.setTargetNamespace("http://utildomain.api.redecorp.br/Parser/v1");
+		wsdl11Definition.setTargetNamespace("http://utildomain.api.redecorp.br/Parser/v1/");
 		wsdl11Definition.setSchema(inOutSchema);
 		return wsdl11Definition;
 	}

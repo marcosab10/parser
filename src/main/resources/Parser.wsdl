@@ -1,6 +1,8 @@
-<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://businesspartnerdomain.api.redecorp.br/Parser/notifyPartnerEvents/v1/" targetNamespace="http://businesspartnerdomain.api.redecorp.br/Parser/notifyPartnerEvents/v1/">
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tns="http://utildomain.api.redecorp.br/Parser/v1/"
+                  targetNamespace="http://utildomain.api.redecorp.br/Parser/v1/">
 	<wsdl:types>
-		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://utildomain.api.redecorp.br/Parser/v1" version="1.0">
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://utildomain.api.redecorp.br/Parser/v1/" version="1.0">
 			<xs:element name="parserRequest">
 				<xs:complexType>
 					<xs:sequence>
@@ -41,7 +43,7 @@
 			<wsdl:output message="tns:parserResponse" name="parserResponse"> </wsdl:output>
 		</wsdl:operation>
 	</wsdl:portType>
-	<wsdl:binding name="ParserPortSoap11" type="tns:ParserPort">
+	<wsdl:binding name="ParserPortSoap" type="tns:ParserPort">
 		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
 		<wsdl:operation name="parser">
 			<soap:operation soapAction=""/>
@@ -55,7 +57,7 @@
 		</wsdl:operation>
 	</wsdl:binding>
 	<wsdl:service name="ParserPortService">
-		<wsdl:port binding="tns:ParserPortSoap11" name="ParserPortSoap11">
+		<wsdl:port binding="tns:ParserPortSoap" name="ParserPortSoap">
 			<soap:address location="http://localhost:8081/parser"/>
 		</wsdl:port>
 	</wsdl:service>

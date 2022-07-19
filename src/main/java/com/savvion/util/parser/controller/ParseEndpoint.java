@@ -15,7 +15,7 @@ import br.redecorp.api.utildomain.parser.v1.ParserResponse;
 
 @Endpoint
 public class ParseEndpoint {
-	private static final String NAMESPACE_URI = "http://utildomain.api.redecorp.br/Parser/v1";
+	private static final String NAMESPACE_URI = "http://utildomain.api.redecorp.br/Parser/v1/";
 
 	private ParserService parserService;
 
