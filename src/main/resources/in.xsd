@@ -1,7 +1,7 @@
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://spring.io/guides/gs-producing-web-service"
-           targetNamespace="http://spring.io/guides/gs-producing-web-service" elementFormDefault="qualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://utildomain.api.redecorp.br/Parser/v1"
+           targetNamespace="http://utildomain.api.redecorp.br/Parser/v1" elementFormDefault="qualified">
 
-    <xs:element name="parseRequest">
+    <xs:element name="parserRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="url" type="xs:string"/>
@@ -12,7 +12,7 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="parseResponse">
+    <xs:element name="parserResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="statusCode" type="xs:int"/>
@@ -20,5 +20,13 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
+    
+    <xs:element name="tefHeaderType">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="token" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
 
 </xs:schema>

@@ -9,6 +9,7 @@ import org.springframework.ws.config.annotation.EnableWs;
 import org.springframework.ws.config.annotation.WsConfigurerAdapter;
 import org.springframework.ws.transport.http.MessageDispatcherServlet;
 import org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition;
+import org.springframework.ws.wsdl.wsdl11.SimpleWsdl11Definition;
 import org.springframework.xml.xsd.SimpleXsdSchema;
 import org.springframework.xml.xsd.XsdSchema;
 
@@ -26,12 +27,19 @@ public class WebServiceConfig extends WsConfigurerAdapter {
 	@Bean(name = "in")
 	public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema inOutSchema) {
 		DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
-		wsdl11Definition.setPortTypeName("InPort");
+		wsdl11Definition.setPortTypeName("ParserPort");
 		wsdl11Definition.setLocationUri("/parser");
-		wsdl11Definition.setTargetNamespace("http://spring.io/guides/gs-producing-web-service");
+		wsdl11Definition.setTargetNamespace("http://utildomain.api.redecorp.br/Parser/v1");
 		wsdl11Definition.setSchema(inOutSchema);
 		return wsdl11Definition;
 	}
+	
+   @Bean(name = "parser")
+    public SimpleWsdl11Definition simpleWsdl11Definition() {
+        SimpleWsdl11Definition simpleWsdl11Definition = new SimpleWsdl11Definition();
+        simpleWsdl11Definition.setWsdl(new ClassPathResource("Parser.wsdl"));
+        return simpleWsdl11Definition;
+    }
 
 	@Bean
 	public XsdSchema inOutSchema() {

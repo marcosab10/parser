@@ -8,12 +8,14 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import com.savvion.util.parser.service.ParserService;
 
-import io.spring.guides.gs_producing_web_service.ParseRequest;
-import io.spring.guides.gs_producing_web_service.ParseResponse;
+import br.redecorp.api.utildomain.parser.v1.ParserRequest;
+import br.redecorp.api.utildomain.parser.v1.ParserResponse;
+
+
 
 @Endpoint
 public class ParseEndpoint {
-	private static final String NAMESPACE_URI = "http://spring.io/guides/gs-producing-web-service";
+	private static final String NAMESPACE_URI = "http://utildomain.api.redecorp.br/Parser/v1";
 
 	private ParserService parserService;
 
@@ -22,9 +24,9 @@ public class ParseEndpoint {
 		this.parserService = parserService;
 	}
 
-	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "parseRequest")
+	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "parserRequest")
 	@ResponsePayload
-	public ParseResponse parse(@RequestPayload ParseRequest request) {
+	public ParserResponse parse(@RequestPayload ParserRequest request) {
 		return parserService.callMS(request);
 	}
 }

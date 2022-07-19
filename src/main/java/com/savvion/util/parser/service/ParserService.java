@@ -8,28 +8,30 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.web.client.RestTemplate;
 
-import io.spring.guides.gs_producing_web_service.ParseRequest;
-import io.spring.guides.gs_producing_web_service.ParseResponse;
+import br.redecorp.api.utildomain.parser.v1.ParserRequest;
+import br.redecorp.api.utildomain.parser.v1.ParserResponse;
+
+
 
 @Service
 public class ParserService {
 	public static int PRETTY_PRINT_INDENT_FACTOR = 1;
 	
-	public ParseResponse callMS(ParseRequest parseRequest) {
-		Assert.notNull(parseRequest.getBody(), "The body  must not be null");
+	public ParserResponse callMS(ParserRequest parserRequest) {
+		Assert.notNull(parserRequest.getBody(), "The body  must not be null");
 		
-		JSONObject xmlJSONObj = XML.toJSONObject(parseRequest.getBody());
+		JSONObject xmlJSONObj = XML.toJSONObject(parserRequest.getBody());
         String jsonPrettyPrintString = xmlJSONObj.toString(PRETTY_PRINT_INDENT_FACTOR);
         System.out.println(jsonPrettyPrintString);
 		
 		
 		RestTemplate client = new RestTemplate();
-		ResponseEntity<String> response = client.exchange(parseRequest.getUrl(), HttpMethod.GET, null, String.class);
+		ResponseEntity<String> response = client.exchange(parserRequest.getUrl(), HttpMethod.GET, null, String.class);
 		
 		JSONObject json = new JSONObject(response.getBody());
 		String xml = XML.toString(json);
 		
-		ParseResponse parseResponse = new ParseResponse();
+		ParserResponse parseResponse = new ParserResponse();
 		parseResponse.setStatusCode(response.getStatusCodeValue());
 		parseResponse.setResult(xml);
 		
