@@ -15,6 +15,7 @@ import com.savvion.util.parser.api.ParserApi;
 
 import br.redecorp.api.utildomain.parser.v1.ParserRequest;
 import br.redecorp.api.utildomain.parser.v1.ParserResponse;
+import br.redecorp.api.utildomain.parser.v1.TefHeaderType;
 
 
 
@@ -22,7 +23,7 @@ import br.redecorp.api.utildomain.parser.v1.ParserResponse;
 public class ParserService implements ParserApi{
 	public static int PRETTY_PRINT_INDENT_FACTOR = 1;
 	
-	public ParserResponse callMS(ParserRequest parserRequest) {
+	public ParserResponse callMS(TefHeaderType tefHeaderType, ParserRequest parserRequest) {
 		Assert.notNull(parserRequest.getUrl(), "The url  must not be null");
 		Assert.notNull(parserRequest.getBody(), "The body  must not be null");
 		Assert.notNull(parserRequest.getVerb(), "The verb  must not be null");
@@ -34,7 +35,7 @@ public class ParserService implements ParserApi{
         System.out.println(jsonRequest);
 		
 		RestTemplate client = new RestTemplate();
-		HttpHeaders headers = buildHeaders(parserRequest.getHeader());
+		HttpHeaders headers = buildAuthorizationHeader(tefHeaderType.getToken());
 		
 		ResponseEntity<String> response = null;
 		
@@ -68,7 +69,7 @@ public class ParserService implements ParserApi{
      * buildHeaders
      * @return
      */
-    public HttpHeaders buildHeaders(String header) {
+    public HttpHeaders buildAuthorizationHeader(String header) {
         var headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("Authorization", header);
