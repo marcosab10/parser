@@ -35,7 +35,7 @@ public class ParserService implements ParserApi{
 			
 			JSONObject xmlJSONObj = XML.toJSONObject(parserRequest.getBody());
 	        String jsonRequest = xmlJSONObj.toString(PRETTY_PRINT_INDENT_FACTOR);
-	        // System.out.println(jsonRequest);
+	        System.out.println(jsonRequest);
 			
 			RestTemplate client = new RestTemplate();
 			HttpHeaders headers = buildAuthorizationHeader(tefHeaderType.getToken());
