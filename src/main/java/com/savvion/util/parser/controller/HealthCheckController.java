@@ -5,11 +5,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.savvion.util.parser.api.ParserApi;
-
 @RestController
-@RequestMapping("/health")
-public class HealthCheckController implements ParserApi {
+@RequestMapping("/healthcheck")
+public class HealthCheckController {
 	
 	private static final String CONTENT_TYPE = "Content-Type";
 	private static final String APPLICATION_JSON = "application/json";
