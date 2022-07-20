@@ -39,17 +39,17 @@ public class ParseEndpoint {
 	}
 	
 	private TefHeaderType unmarshallTefHeaderFromSoapHeader(SoapHeaderElement header) {
-		TefHeaderType security = null;
+		TefHeaderType tefHeaderType = null;
         try {
 
             JAXBContext context = JAXBContext.newInstance(TefHeaderType.class);
             Unmarshaller unmarshaller = context.createUnmarshaller();
-            security = (TefHeaderType) unmarshaller.unmarshal(header.getSource());
+            tefHeaderType = (TefHeaderType) unmarshaller.unmarshal(header.getSource());
 
         } catch (JAXBException e) {
             e.printStackTrace();
         }
-        return security;
+        return tefHeaderType;
     }
 
 }
