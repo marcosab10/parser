@@ -1,15 +1,13 @@
-<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-                  xmlns:tns="http://utildomain.api.redecorp.br/Parser/v1/"
-                  targetNamespace="http://utildomain.api.redecorp.br/Parser/v1/">
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://utildomain.api.redecorp.br/Parser/v1/" targetNamespace="http://utildomain.api.redecorp.br/Parser/v1/">
 	<wsdl:types>
 		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://utildomain.api.redecorp.br/Parser/v1/" version="1.0">
 			<xs:element name="parserRequest">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="url" type="xs:string"/>
-						<xs:element name="header" type="xs:string"/>
-						<xs:element name="body" type="xs:string"/>
-						<xs:element name="verb" type="xs:string"/>
+						<xs:element name="url" type="xs:string" minOccurs="1"/>
+						<xs:element name="body" type="xs:string" minOccurs="1"/>
+						<xs:element name="verb" type="xs:string" minOccurs="1"/>
+						<xs:element name="queryParam" type="tns:queryParam" minOccurs="0" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
@@ -28,6 +26,12 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
+			<xs:complexType name="queryParam">
+				<xs:sequence>
+					<xs:element name="key" type="xs:string"/>
+					<xs:element name="value" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
 		</xs:schema>
 	</wsdl:types>
 	<wsdl:message name="parserRequest">

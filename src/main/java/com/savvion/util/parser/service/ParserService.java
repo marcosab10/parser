@@ -15,6 +15,7 @@ import com.savvion.util.parser.api.ParserApi;
 
 import br.redecorp.api.utildomain.parser.v1.ParserRequest;
 import br.redecorp.api.utildomain.parser.v1.ParserResponse;
+import br.redecorp.api.utildomain.parser.v1.QueryParam;
 import br.redecorp.api.utildomain.parser.v1.TefHeaderType;
 
 
@@ -32,26 +33,27 @@ public class ParserService implements ParserApi{
 		
 		JSONObject xmlJSONObj = XML.toJSONObject(parserRequest.getBody());
         String jsonRequest = xmlJSONObj.toString(PRETTY_PRINT_INDENT_FACTOR);
-        System.out.println(jsonRequest);
+        // System.out.println(jsonRequest);
 		
 		RestTemplate client = new RestTemplate();
 		HttpHeaders headers = buildAuthorizationHeader(tefHeaderType.getToken());
 		
 		ResponseEntity<String> response = null;
+		String url = getUrl(parserRequest);
 		
 		String verbUpperCase = parserRequest.getVerb().toUpperCase();
 		if(HttpMethod.GET.toString().equals(verbUpperCase)){
 			HttpEntity<String> entity = new HttpEntity<>(null, headers);
-			response = client.exchange(parserRequest.getUrl(), HttpMethod.GET, entity, String.class);
+			response = client.exchange(url, HttpMethod.GET, entity, String.class);
 		} else if(HttpMethod.PUT.toString().equals(verbUpperCase)){
 			HttpEntity<String> entity = new HttpEntity<>(jsonRequest, headers);
-			response = client.exchange(parserRequest.getUrl(), HttpMethod.PUT, entity, String.class);
+			response = client.exchange(url, HttpMethod.PUT, entity, String.class);
 		} else if(HttpMethod.POST.toString().equals(verbUpperCase)){
 			HttpEntity<String> entity = new HttpEntity<>(jsonRequest, headers);
-			response = client.exchange(parserRequest.getUrl(), HttpMethod.POST, entity, String.class);
+			response = client.exchange(url, HttpMethod.POST, entity, String.class);
 		} else if(HttpMethod.DELETE.toString().equals(verbUpperCase)){
 			HttpEntity<String> entity = new HttpEntity<>(null, headers);
-			response = client.exchange(parserRequest.getUrl(), HttpMethod.DELETE, entity, String.class);
+			response = client.exchange(url, HttpMethod.DELETE, entity, String.class);
 		}
 
 		ParserResponse parseResponse = new ParserResponse();
@@ -75,6 +77,21 @@ public class ParserService implements ParserApi{
         headers.set("Authorization", header);
         
         return headers;
+    }
+    
+    private String getUrl(ParserRequest parserRequest) {
+    	String url = parserRequest.getUrl();
+    	
+    	if(parserRequest.getQueryParam() != null && parserRequest.getQueryParam().size() > 0) {
+    		for (QueryParam queryPar : parserRequest.getQueryParam()) {
+    			if(!url.contains("?")) {
+    				url = url + "?" + queryPar.getKey() + "=" + queryPar.getValue();
+    			} else {
+    				url = url + "&" + queryPar.getKey() + "=" + queryPar.getValue();
+    			}
+			}
+    	}
+    	return url;
     }
 
 }
