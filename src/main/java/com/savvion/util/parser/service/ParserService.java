@@ -25,43 +25,46 @@ public class ParserService implements ParserApi{
 	public static int PRETTY_PRINT_INDENT_FACTOR = 1;
 	
 	public ParserResponse callMS(TefHeaderType tefHeaderType, ParserRequest parserRequest) {
-		Assert.notNull(parserRequest.getUrl(), "The url  must not be null");
-		Assert.notNull(parserRequest.getBody(), "The body  must not be null");
-		Assert.notNull(parserRequest.getVerb(), "The verb  must not be null");
-	
-		
-		
-		JSONObject xmlJSONObj = XML.toJSONObject(parserRequest.getBody());
-        String jsonRequest = xmlJSONObj.toString(PRETTY_PRINT_INDENT_FACTOR);
-        // System.out.println(jsonRequest);
-		
-		RestTemplate client = new RestTemplate();
-		HttpHeaders headers = buildAuthorizationHeader(tefHeaderType.getToken());
-		
-		ResponseEntity<String> response = null;
-		String url = getUrl(parserRequest);
-		
-		String verbUpperCase = parserRequest.getVerb().toUpperCase();
-		if(HttpMethod.GET.toString().equals(verbUpperCase)){
-			HttpEntity<String> entity = new HttpEntity<>(null, headers);
-			response = client.exchange(url, HttpMethod.GET, entity, String.class);
-		} else if(HttpMethod.PUT.toString().equals(verbUpperCase)){
-			HttpEntity<String> entity = new HttpEntity<>(jsonRequest, headers);
-			response = client.exchange(url, HttpMethod.PUT, entity, String.class);
-		} else if(HttpMethod.POST.toString().equals(verbUpperCase)){
-			HttpEntity<String> entity = new HttpEntity<>(jsonRequest, headers);
-			response = client.exchange(url, HttpMethod.POST, entity, String.class);
-		} else if(HttpMethod.DELETE.toString().equals(verbUpperCase)){
-			HttpEntity<String> entity = new HttpEntity<>(null, headers);
-			response = client.exchange(url, HttpMethod.DELETE, entity, String.class);
-		}
-
 		ParserResponse parseResponse = new ParserResponse();
-		if(response != null) {
-			JSONObject json = new JSONObject(response.getBody());
-			String xml = XML.toString(json);
-			parseResponse.setStatusCode(response.getStatusCodeValue());
-			parseResponse.setResult(xml);
+		
+		Assert.notNull(parserRequest.getUrl(), "The url  must not be null");
+		Assert.notNull(parserRequest.getHttpMethod(), "The verb  must not be null");
+	
+		if(parserRequest.getUrl() != null && !parserRequest.getUrl().isEmpty()
+				&& parserRequest.getHttpMethod() != null && !parserRequest.getHttpMethod().isEmpty())	{
+			
+			JSONObject xmlJSONObj = XML.toJSONObject(parserRequest.getBody());
+	        String jsonRequest = xmlJSONObj.toString(PRETTY_PRINT_INDENT_FACTOR);
+	        // System.out.println(jsonRequest);
+			
+			RestTemplate client = new RestTemplate();
+			HttpHeaders headers = buildAuthorizationHeader(tefHeaderType.getToken());
+			
+			ResponseEntity<String> response = null;
+			String url = getUrl(parserRequest);
+			
+			String verbUpperCase = parserRequest.getHttpMethod().toUpperCase();
+			if(HttpMethod.GET.toString().equals(verbUpperCase)){
+				HttpEntity<String> entity = new HttpEntity<>(null, headers);
+				response = client.exchange(url, HttpMethod.GET, entity, String.class);
+			} else if(HttpMethod.PUT.toString().equals(verbUpperCase)){
+				HttpEntity<String> entity = new HttpEntity<>(jsonRequest, headers);
+				response = client.exchange(url, HttpMethod.PUT, entity, String.class);
+			} else if(HttpMethod.POST.toString().equals(verbUpperCase)){
+				HttpEntity<String> entity = new HttpEntity<>(jsonRequest, headers);
+				response = client.exchange(url, HttpMethod.POST, entity, String.class);
+			} else if(HttpMethod.DELETE.toString().equals(verbUpperCase)){
+				HttpEntity<String> entity = new HttpEntity<>(null, headers);
+				response = client.exchange(url, HttpMethod.DELETE, entity, String.class);
+			}
+
+			
+			if(response != null) {
+				JSONObject json = new JSONObject(response.getBody());
+				String xml = XML.toString(json);
+				parseResponse.setStatusCode(response.getStatusCodeValue());
+				parseResponse.setResult(xml);
+			}
 		}
 		
 		return parseResponse;
